@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登入界面</title>
+    <script src="./axios.min.js"></script>
+    <script src="./vue.js"></script>
+    <script src="./table.js"></script>
+    <script src="./admin.js"></script>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <link rel="stylesheet" href="./style_teacher.css">
+    <link rel="shortcut icon" href="./img/R.ico">
+    <style>
+        body{
+            background-image: url("img/xiaoyazi.jpg");
+        }
+    </style>
+</head>
+
+<body>
+    <h1>学生选课系统</h1>
+    <div id="root">
+        <ul>
+
+            <li>
+                <button @click="query_student">查询学生信息</button>
+            </li>
+            <li>
+                <button @click="query_class_student">查询班级学生信息</button>
+            </li>
+
+            <li>
+                <button @click="query_grade">查询学科成绩</button>
+            </li>
+            <li>
+                <button @click="change_subject">选课</button>
+            </li>
+        </ul>
+    </div>
+    <div id="container">
+
+    </div>
+    <div id="question"></div>
+    <script>
+        let vm = new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                async clear() {
+                    var container = document.getElementById('container');
+                    container.innerHTML = '';
+                },
+                async change_subject() {
+                    this.clear();
+                    var array = ['请输入姓名：', '请输入学号', '请输入课程名'];
+                    var q = await question(array);
+                    var username = q[0], number = q[1], subject = q[2];
+                    let res = await change_subject(username, number, subject);
+                    let s = res.message;
+                    alert(s);
+                },
+
+                async query_grade() {
+                    this.clear();
+                    var array = ['请输入你要查询的学科名：'];
+                    var q = await question(array);
+                    var subject = q[0];
+                    let res = await query_grade(subject);
+                    let s = res.message;
+                    alert(s);
+                    json_table(res.data);
+
+                },
+                async query_student() {
+                    this.clear();
+                    var array = ['请输入学生的名：'];
+                    var q = await question(array);
+                    var username = q[0];
+                    let res = await query_student(username);
+                    let s = res.message;
+                    alert(s);
+                    json_table(res.data);
+                    res = await query_student_grade(username);
+                    // console.log(res);
+                    json_table(res.data);
+
+                },
+                async query_class_student() {
+                    this.clear();
+                    var array = ['请输入班级名：'];
+                    var q = await question(array);
+                    var id = q[0];
+                    let res = await query_class_student(id);
+                    let s = res.message;
+                    alert(s);
+                    json_table(res.data);
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

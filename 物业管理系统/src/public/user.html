@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登入界面</title>
+    <script src="./axios.min.js"></script>
+    <script src="./vue.js"></script>
+    <script src="./table.js"></script>
+    <script src="./admin.js"></script>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <link rel="stylesheet" href="./style_main.css">
+    <link rel="shortcut icon" href="./img/R.ico">
+</head>
+<body>
+    <h1>业主登录系统</h1>
+    <div id="root">
+        <ul>
+            <li>
+                <button @click="insert_repair">添加报修信息</button>
+            </li>
+            <li>
+                <button @click="insert_com">投诉</button>
+            </li>
+            <li>
+                <button @click="query_user">个人信息查询</button>
+            </li>
+            <li>
+                <button @click="update_tel">更改电话</button>
+            </li>
+            <li>
+                <button @click="update_password">修改密码</button>
+            </li>
+            <li>
+                <button @click="update_address">修改地址</button>
+            </li>
+            
+            <li>
+                <button @click="query_notice">查询公报</button>
+            </li>
+        </ul>
+    </div>
+    <div id="container">
+
+    </div>
+    <div id="question"></div>
+    <script>
+        var my_name,my_id,my_tel,my_address;
+        window.onload = function () {
+            var url = location.href;
+            var n1 = url.length;
+            var n2 = url.indexOf("=");
+            my_name= decodeURI(url.substr(n2 + 1));
+            alert('欢迎回来 '+my_name);
+        }
+        let vm = new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                clear(){
+                    var container = document.getElementById('container');
+                    container.innerHTML = '';
+                },
+                async query_user() {
+                    this.clear();
+                    let res=await query_user(my_name);
+                    let s=res.message;
+                    my_id=res.data.id;
+                    my_tel=res.data.tel;
+                    my_address=res.data.address;
+                    // console.log(res.data);
+                    alert(s);
+                    json_table(res.data);
+                },
+                async update_tel() {
+                    var array=['请输入新的电话号码：'];
+                    var q=await question(array);
+                    var tel=q[0];
+                    let res=await update_tel(my_name,tel);
+                    let s=res.message;
+                    alert(s);
+                },
+                async insert_repair() {
+                    var array=['请输入报修内容：'];
+                    var q=await question(array);
+                    let content=q[0];
+                    var d=new Date();
+                    var time=d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDate())+"日";
+                    if(!my_id)
+                    {
+                        alert('请更新你的用户信息');
+                        return ;
+                    }
+                    let res = await insert_repair(time,content,my_id);
+                    alert(res.message);
+                    // alert(time);
+                    
+                },
+                async insert_com() {
+                    var array=['请输入投诉内容：'];
+                    var q=await question(array);
+                    let content=q[0];
+                    var d=new Date();
+                    var time=d.getFullYear()+"年"+(d.getMonth()+1)+"月"+(d.getDate())+"日";
+                    if(!my_id)
+                    {
+                        alert('请更新你的用户信息');
+                        return ;
+                    }
+                    let res = await insert_com(time,content,my_id);
+                    alert(res.message);
+                    // alert(time);
+                    
+                },
+                async update_password() {
+                    var array=['请输入新的密码：'];
+                    var q=await question(array);
+                    var a=q[0];
+                    let res=await update_password(my_name,a);
+                    let s=res.message;
+                    alert(s);
+                },
+                async update_address() {
+                    var array=['请输入新的地址：'];
+                    var q=await question(array);
+                    var a=q[0];
+                    let res=await update_address(my_name,a);
+                    let s=res.message;
+                    alert(s);
+                },
+                async query_repair(){
+                    this.clear();
+                    let res=await query_repair();
+                    json_table(res.data);
+                },
+                async query_notice() {
+                    this.clear();
+                    let res = await query_notice();
+                    let s = res.message;
+                    alert(s);
+                    json_table(res.data);
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

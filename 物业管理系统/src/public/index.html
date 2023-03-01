@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录界面</title>
+    <script src="./axios.min.js"></script>
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="./admin.js"></script>
+    <script src="./table.js"></script>
+    <link rel="shortcut icon" href="./img/R.ico">
+</head>
+
+<body>
+    <h1>用户登录系统</h1>
+    <div id="root">
+        <h3>管理员登录系统</h3><br>
+        用户名：<input type="text" v-model="username"><br>
+        密 码： <input type="password" v-model="password" @keyup.enter="submit"><br>
+        <button @click="change">切换用户身份</button> <button @click="submit">提交</button>
+    </div>
+    <script>
+        var flag = 1;
+        let vm = new Vue({
+            el: '#root',
+            data: {
+                username: '',
+                password: '',
+            },
+            methods: {
+                async change() {
+                    change_body();
+                    flag = 1 - flag;
+                    console.log(flag);
+                },
+                async submit() {
+                    let res;
+                    if (flag == 1) {
+                        res = await login(this.username, this.password);
+                        alert(res.message);
+                        if (res.status == 200)
+                            this.toURL();
+                    }
+                    else {
+                        res = await login_user(this.username, this.password);
+                        alert(res.message);
+                        if (res.status == 200)
+                            this.toURL2();
+                    }
+
+
+                },
+                toURL() {
+                    // window.open("./admin.html",'hei','ssss');
+                    location.href="./admin.html?txt="+encodeURI(this.username);
+                    // alert('heihie');
+                },
+                toURL2(){
+                    location.href="./user.html?txt="+encodeURI(this.username);
+                }
+                
+
+            },
+        })
+    </script>
+</body>
+
+</html>

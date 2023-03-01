@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登入界面</title>
+    <script src="./vue.js"></script>
+    <script src="./axios.min.js"></script>
+    <script src="./table.js"></script>
+    <script src="./admin.js"></script>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <link rel="stylesheet" href="./style_main.css">
+    <link rel="shortcut icon" href="./img/R.ico">
+</head>
+
+<body>  
+    <h1>管理员登录系统</h1>
+    <div id="root">
+        <ul>
+            <li>
+                <button @click="query_repair">查询报修信息</button>
+            </li>
+            <li>
+                <button @click="query_com">查询投诉信息</button>
+            </li>
+            <li>
+                <button @click="update_repair">修改报修状态</button>
+            </li>
+            <li>
+                <button @click="update_com">处理投诉信息</button>
+            </li>
+            <li>
+                <button @click="put_notice">发布公报</button>
+            </li>
+            <li>
+                <button @click="query_notice">查看公报</button>
+            </li>
+        </ul>
+    </div>
+    <div id="container">
+
+    </div>
+    <div id="question"></div>
+    <script>
+        var my_name;
+        window.onload = function () {
+            var url = location.href;
+            var n1 = url.length;
+            var n2 = url.indexOf("=");
+            my_name= decodeURI(url.substr(n2 + 1));
+            alert('欢迎回来 '+my_name);
+        }
+        let vm = new Vue({
+            el: '#root',
+            data: {
+                username: "",
+            },
+            methods: {
+                clear(){
+                    var container = document.getElementById('container');
+                    container.innerHTML = '';
+                },
+                async query_repair(){
+                    this.clear();
+                    let res=await query_repair();
+                    json_table(res.data);
+                },
+                async query_com(){
+                    this.clear();
+                    let res=await query_com();
+                    json_table(res.data);
+                },
+                async update_repair(){
+                    var array=['请输入报修号：'];
+                    var q=await question(array);
+                    var id=q[0];
+                    let res =await update_repair(id);
+                    let s=res.message;
+                    alert(s);
+                },
+                async update_com(){
+                    var array=['请输入投诉号：'];
+                    var q=await question(array);
+                    var id=q[0];
+                    let res =await update_com(id);
+                    let s=res.message;
+                    alert(s);
+                },
+                async put_notice() {
+
+                    var array = ['请输入公报的内容：'];
+                    var q = await question(array);
+                    var name = q[0];
+                    let res = await put_notice(name);
+                    let s = res.message;
+                    alert(s);
+                },
+                async query_notice() {
+                    this.clear();
+                    let res = await query_notice();
+                    let s = res.message;
+                    alert(s);
+                    json_table(res.data);
+                },
+                async insert() {
+                    var array = ['请输入学生的名字：', '请输入学生的班级：'];
+                    var q = await question(array);
+                    let name = q[0], class_id = q[1];
+                    let res = await student_insert(name, class_id);
+                    alert(res.message);
+
+                },
+                async update_password() {
+                    var array = ['请输入你的姓名：', '请输入你的原密码：'];
+                    var q = await question(array);
+                    let username = q[0], password = q[1];
+                    var res = await login(username, password);
+                    if (res.status != 200)
+                        return alert('原密码不正确，请重新输入：');
+
+                    array = ['请输入要修改的密码：'];
+                    q = await question(array);
+                    let np = q[0];
+                    res = await update_password(username, np);
+                    alert(res.message);
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

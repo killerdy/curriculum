@@ -1,0 +1,51 @@
+#root {
+    margin:50px 600px;
+    font-size: 25px;
+    font-family: '楷体';
+    color: rgb(152, 137, 90);
+    font-weight: 700;
+
+}
+button {
+    /* background-color: rgb(190, 137, 108,); */
+    background-color: grey;
+    margin-right: 50px;
+    margin-left: 20px;
+}
+button:hover {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+}
+h1 {
+    font-size: 50px;
+    margin-top: 150px;
+    margin-left: 600px;
+    font-family: '楷体';
+    color:rgb(155, 140, 111);
+}
+h1:hover {
+    text-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.3);
+}
+body{
+    background-image: url(./img/xiaomao.jpg);
+}
+input{
+    background-color: rgb(198, 223, 203);
+}
+h3 {
+    margin: 0 0;
+}
+h3:hover {
+    text-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.3);
+}
+.div {
+    position:absolute;
+    top: 80px;
+    width: 250px;
+    /* height: 50px; */
+    left: 50%;
+    margin-left: -100px;
+    background-color: rgb(87, 189, 177);
+    text-align: center;
+    line-height: 50px;
+}

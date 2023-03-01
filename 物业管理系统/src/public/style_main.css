@@ -1,0 +1,86 @@
+
+ul {
+    position: absolute;
+    left: 0px;
+    /* right:100px; */
+    top:10%;
+    width: 100px;
+    list-style-type: none;
+}
+button {
+    /* background-color: rgb(190, 137, 108,); */
+    background-color: rgb(196, 183, 215);
+    height: 100px;
+    width: 200px;
+    font-weight: 100px;
+    border: none;
+    font-size: 30px;
+    font-family: '楷体';
+    color: rgb(100, 0, 0);
+}
+button:hover {
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.2);
+}
+h1 {
+    width: 400px;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-left: 600px;
+    font-family: '楷体';
+    color:rgb(196, 183, 215)
+}
+h1:hover {
+    text-shadow: 5px 5px 5px  rgba(0, 0, 0, 0.3);
+}
+body{
+    background-image: url(./img/maomao.jpg);
+    background-size:50%;
+}
+input{
+    background-color: rgb(198, 223, 203);
+}
+#container {
+    position:absolute;
+    top:150px;
+    left: 600px;
+}
+#container:hover{
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.3);
+}
+table
+{
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+}
+table td, table th
+{
+    border: 1px solid #cad9ea;
+    color: #666;
+    height: 30px;
+}
+table thead th
+{
+    background-color: #CCE8EB;
+    width: 100px;
+}
+table tr:nth-child(odd)
+{
+    background:rgb(196, 183, 215);
+}
+table tr:nth-child(even)
+{
+    background:rgb(155, 198, 192);
+}
+.div {
+    position:absolute;
+    top: 80px;
+    width: 250px;
+    /* height: 50px; */
+    left: 50%;
+    margin-left: -100px;
+    background-color: rgb(196, 183, 215);
+    text-align: center;
+    line-height: 50px;
+}
